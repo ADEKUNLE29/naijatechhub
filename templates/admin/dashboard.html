@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - NaijaTechHub{% endblock %}
+
+{% block content %}
+<section class="py-5" style="background: linear-gradient(135deg, #2563eb, #7c3aed);">
+    <div class="container text-white">
+        <h1 class="fw-bold">Admin Dashboard</h1>
+        <p class="mb-0">Manage opportunities and monitor platform activity</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>{{ total_users }}</h3>
+                    <p class="text-muted">Total Users</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <i class="fas fa-briefcase"></i>
+                    <h3>{{ total_opps }}</h3>
+                    <p class="text-muted">Opportunities</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <i class="fas fa-bookmark"></i>
+                    <h3>{{ total_saved }}</h3>
+                    <p class="text-muted">Saved Opportunities</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mb-5">
+            <a href="{{ url_for('add_opportunity') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus me-2"></i>Add New Opportunity
+            </a>
+        </div>
+
+        <!-- Recent Opportunities -->
+        <h4 class="fw-bold mb-3">Recent Opportunities</h4>
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Company</th>
+                            <th>Type</th>
+                            <th>Location</th>
+                            <th>Views</th>
+                            <th>Deadline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for opp in recent_opps %}
+                        <tr>
+                            <td>{{ opp.title }}</td>
+                            <td>{{ opp.company }}</td>
+                            <td><span class="badge-type badge-{{ opp.type }}">{{ opp.type.title() }}</span></td>
+                            <td>{{ opp.location }}</td>
+                            <td>{{ opp.views }}</td>
+                            <td>{{ opp.deadline }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Add Opportunity - NaijaTechHub Admin{% endblock %}
+
+{% block content %}
+<section class="py-5" style="background: linear-gradient(135deg, #2563eb, #7c3aed);">
+    <div class="container text-white">
+        <h1 class="fw-bold">Add New Opportunity</h1>
+        <p class="mb-0">Create a new opportunity for the community</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body p-5">
+                        <form method="POST" action="{{ url_for('add_opportunity') }}">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" name="title" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Company</label>
+                                    <input type="text" name="company" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Type</label>
+                                    <select name="type" class="form-select" required>
+                                        <option value="internship">Internship</option>
+                                        <option value="job">Job</option>
+                                        <option value="hackathon">Hackathon</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Location</label>
+                                    <input type="text" name="location" class="form-control" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Description</label>
+                                    <textarea name="description" class="form-control" rows="4" required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Required Skills (comma separated)</label>
+                                    <input type="text" name="skills_required" class="form-control" placeholder="Python, HTML, CSS, JavaScript" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Deadline</label>
+                                    <input type="date" name="deadline" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Apply Link</label>
+                                    <input type="url" name="apply_link" class="form-control" placeholder="https://..." required>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="fas fa-plus me-2"></i>Add Opportunity
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

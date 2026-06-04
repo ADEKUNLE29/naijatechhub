@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - NaijaTechHub{% endblock %}
+
+{% block content %}
+<section class="py-5" style="background: linear-gradient(135deg, #2563eb, #7c3aed);">
+    <div class="container text-white">
+        <h1 class="fw-bold">Welcome, {{ user.name }}!</h1>
+        <p class="mb-0">Manage your saved opportunities and discover new ones</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <!-- AI Recommendations -->
+        <h3 class="fw-bold mb-4"><i class="fas fa-brain text-primary me-2"></i>Recommended for You</h3>
+        <div class="row g-4 mb-5">
+            {% for opp in recommendations %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-primary">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="badge-type badge-{{ opp.type }}">{{ opp.type.title() }}</span>
+                            <span class="badge bg-success">AI Match</span>
+                        </div>
+                        <h5 class="card-title fw-bold">{{ opp.title }}</h5>
+                        <p class="text-primary fw-semibold">{{ opp.company }}</p>
+                        <p class="text-muted small"><i class="fas fa-map-marker-alt me-1"></i>{{ opp.location }}</p>
+                        <div class="mb-3">
+                            {% for skill in opp.skills_required.split(',')[:3] %}
+                                <span class="badge bg-light text-dark me-1">{{ skill.strip() }}</span>
+                            {% endfor %}
+                        </div>
+                        <a href="{{ url_for('opportunity_detail', id=opp.id) }}" class="btn btn-primary btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Saved Opportunities -->
+        <h3 class="fw-bold mb-4"><i class="fas fa-bookmark text-primary me-2"></i>Saved Opportunities</h3>
+        {% if saved %}
+        <div class="row g-4">
+            {% for item in saved %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <span class="badge-type badge-{{ item.opportunity.type }}">{{ item.opportunity.type.title() }}</span>
+                        <h5 class="card-title fw-bold mt-2">{{ item.opportunity.title }}</h5>
+                        <p class="text-primary">{{ item.opportunity.company }}</p>
+                        <p class="text-muted small">Saved on {{ item.saved_at.strftime('%B %d, %Y') }}</p>
+                        <a href="{{ url_for('opportunity_detail', id=item.opportunity.id) }}" class="btn btn-outline-primary btn-sm">View</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-bookmark fa-3x text-muted mb-3"></i>
+            <p class="text-muted">No saved opportunities yet. Start browsing!</p>
+            <a href="{{ url_for('opportunities') }}" class="btn btn-primary">Browse Opportunities</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
